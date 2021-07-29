@@ -87,7 +87,7 @@ class Map extends React.Component {
         return marker;
       });
 
-      markerClusterer = new MarkerClusterer(this.props.map, markers, {
+      markerClusterer = new MarkerClusterer(map, markers, {
         imagePath:
           "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
       });
@@ -106,7 +106,7 @@ class Map extends React.Component {
       }
       markers.map((marker) => {
         let d = google.maps.geometry.spherical.computeDistanceBetween(marker.position, latLng);
-        markersDistances.push({
+        return markersDistances.push({
           distance: d,
           marker: marker,
         })
