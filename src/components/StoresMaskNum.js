@@ -19,7 +19,7 @@ const StoresMaskNum = ({ mask_adult, mask_child, isInfoWindow = false }) => {
       <div
         style={{ backgroundColor: `${MaskBgColor(mask_adult)}` }}
         className={`bg-primary flex justify-between items-center rounded-full
-      w-1/2 px-6 py-2 mr-4 font-bold storesMaskNumStyle ${isInfoWindow ? 'mb-2 lg:mb-0' : ''}`}
+      w-1/2 px-6 py-2 lg:mr-4 font-bold storesMaskNumStyle ${isInfoWindow ? 'mb-2 lg:mb-0' : 'mr-4'}`}
       >
         <div>成人{`${isInfoWindow ? '' : '口罩'}`}</div>
         <div className="text-xl">{mask_adult}</div>
