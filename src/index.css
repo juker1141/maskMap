@@ -1,13 +1,64 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ./src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  overflow: -moz-hidden-unscrollable;
+  height: 100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  height: 100%;
+  overflow: auto;
+}
+
+#map img {
+  max-width: none;
+}
+.gm-style-iw {
+  min-width: 250px !important;
+  padding: 0 !important;
+}
+.gm-style-iw-d {
+  padding: 20px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+.gm-style-iw-d div {
+  width: 100%;
+}
+.storesMaskNumStyle div {
+  width: auto !important;
+}
+
+.gm-style-iw .gm-ui-hover-effect {
+  width: 20px !important;
+  height: 20px !important;
+  top: 20px !important;
+  right: 20px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+@media (min-width: 1024px) {
+  .gm-style-iw {
+    min-width: 400px !important;
+  }
+  .gm-style-iw .gm-ui-hover-effect {
+    width: 30px !important;
+    height: 30px !important;
+    top: 20px !important;
+    right: 30px !important;
+  }
+}
+.gm-style-iw .gm-ui-hover-effect img {
+  width: 100% !important;
+  height: 100% !important;
 }
