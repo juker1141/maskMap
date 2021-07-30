@@ -92,7 +92,7 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div className="relative text-gray" >
+      <div className="relative" >
         <input
           id="googleInput"
           className="rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 w-full py-3 px-5"
