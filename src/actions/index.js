@@ -6,11 +6,12 @@ import {
   UPDATE_CLOSEST_STORES,
 } from './types';
 import { Loader } from '@googlemaps/js-api-loader';
+import keys from '../config/keys';
 import axios from 'axios';
 
 export const loadMap = (center) => async (dispatch) => {
   const loader = new Loader({
-    apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    apiKey: keys.googleMapsApiKey,
     version: "weekly",
     libraries: ["places", "geometry"],
   });

@@ -4,7 +4,7 @@ import StoresMaskNum from './StoresMaskNum';
 const StoresItem = ({ store, isInfoWindow = false, onClick = null }) => {
   return (
     <div className={`${isInfoWindow ? "" : "px-3 py-2"} storesItemStyle`} onClick={onClick}>
-      <div className="font-bold text-xl lg:text-2xl pb-1 flex justify-between items-center">
+      <div className="font-bold text-xl lg:text-2xl pb-1 flex justify-between items-center pr-5">
         {store.properties.name}
       </div>
       <div className="text-secondary text-sm lg:text-base">
