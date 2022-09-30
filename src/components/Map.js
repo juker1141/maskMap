@@ -1,26 +1,26 @@
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import MarkerClusterer from '@googlemaps/markerclustererplus';
-import { connect } from 'react-redux';
-import { loadMap, fetchMaskData, updateClosestStores } from '../actions';
+import React from "react";
+import ReactDOMServer from "react-dom/server";
+import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import { connect } from "react-redux";
+import { loadMap, fetchMaskData, updateClosestStores } from "../actions";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import { getLocalMaskList } from '../selects';
+import { getLocalMaskList } from "../selects";
 
-import StoresItem from './StoresItem';
+import StoresItem from "./StoresItem";
 
 const center = {
   lat: 22.626780089095906,
   lng: 120.31808747527931,
 };
+
 let markerClusterer;
 let markers;
-class Map extends React.Component {
 
+class Map extends React.Component {
   componentDidMount() {
     this.props.loadMap(center);
     this.props.fetchMaskData();
-
-  };
+  }
 
   componentDidUpdate() {
     if (markers) {
@@ -38,13 +38,13 @@ class Map extends React.Component {
   markerFillColor(properties) {
     const totalMaskNum = properties.mask_adult + properties.mask_child;
     if (totalMaskNum >= 3000) {
-      return '#22C55E';
+      return "#22C55E";
     } else if (totalMaskNum <= 2999 && totalMaskNum >= 1000) {
-      return '#F97316';
+      return "#F97316";
     } else if (totalMaskNum <= 999 && totalMaskNum > 0) {
-      return '#DC2626';
+      return "#DC2626";
     } else if (totalMaskNum === 0) {
-      return '#A5A5A5';
+      return "#A5A5A5";
     }
   }
 
@@ -72,26 +72,24 @@ class Map extends React.Component {
           properties,
         });
 
-        marker.addListener("click", (e) => {
-          const content = ReactDOMServer.renderToString(
-            <StoresItem
-              store={marker}
-              isInfoWindow={true}
-            />
-          );
-          infoWindow.close();
-          infoWindow.setContent(content);
-          infoWindow.open(marker.getMap(), marker);
-        }, false);
+        marker.addListener(
+          "click",
+          (e) => {
+            const content = ReactDOMServer.renderToString(
+              <StoresItem store={marker} isInfoWindow={true} />
+            );
+            infoWindow.close();
+            infoWindow.setContent(content);
+            infoWindow.open(marker.getMap(), marker);
+          },
+          false
+        );
 
         return marker;
       });
 
-      markerClusterer = new MarkerClusterer(map, markers, {
-        imagePath:
-          "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
-      });
-    };
+      markerClusterer = new MarkerClusterer({map, markers});
+    }
   }
 
   findClosestMarkers(markers, n = 10) {
@@ -100,28 +98,37 @@ class Map extends React.Component {
       const google = this.props.google;
       let latLng;
       if (!this.props.place) {
-        latLng = new google.maps.LatLng(center.lat, center.lng);;
+        latLng = new google.maps.LatLng(center.lat, center.lng);
       } else {
         latLng = this.props.place.geometry.location;
       }
       markers.map((marker) => {
-        let d = google.maps.geometry.spherical.computeDistanceBetween(marker.position, latLng);
+        let d = google.maps.geometry.spherical.computeDistanceBetween(
+          marker.position,
+          latLng
+        );
         return markersDistances.push({
           distance: d,
           marker: marker,
+        });
+      });
+      let closestMarkers = markersDistances
+        .sort((a, b) => {
+          return a.distance - b.distance;
         })
-      })
-      let closestMarkers = markersDistances.sort((a, b) => { return a.distance - b.distance }).slice(0, n);
+        .slice(0, n);
       this.props.updateClosestStores(closestMarkers);
     }
-  };
+  }
 
   render() {
-    return <div id="map" className="h-screen w-full lg:w-2/3 xl:w-3/4">
-      {this.initMarkers()}
-    </div>
-  };
-};
+    return (
+      <div id="map" className="h-screen w-full lg:w-2/3 xl:w-3/4">
+        {this.initMarkers()}
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = (state) => {
   if (state.googleMap) {
@@ -135,6 +142,10 @@ const mapStateToProps = (state) => {
     };
   }
   return { maskData: getLocalMaskList(state) };
-}
+};
 
-export default connect(mapStateToProps, { loadMap, fetchMaskData, updateClosestStores })(Map);
+export default connect(mapStateToProps, {
+  loadMap,
+  fetchMaskData,
+  updateClosestStores,
+})(Map);
