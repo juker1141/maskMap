@@ -1,17 +1,17 @@
 import {
-  INIT_MAP,
+  INIT_MAP_SUCCESS,
+  INIT_MAP_ERROR,
   FETCH_MASKDATA,
   POSITIONING_PLACE,
   UPDATE_AREA,
   UPDATE_CLOSEST_STORES,
 } from './types';
 import { Loader } from '@googlemaps/js-api-loader';
-import keys from '../config/keys';
 import axios from 'axios';
 
-export const loadMap = (center) => async (dispatch) => {
+export const loadMap = ({googleMapsApiKey, center}) => async (dispatch) => {
   const loader = new Loader({
-    apiKey: keys.googleMapsApiKey,
+    apiKey: googleMapsApiKey,
     version: "weekly",
     libraries: ["places", "geometry"],
   });
@@ -29,9 +29,11 @@ export const loadMap = (center) => async (dispatch) => {
       const infoWindow = new google.maps.InfoWindow({
         maxWidth: 500,
       });
-      dispatch({ type: INIT_MAP, payload: { google, map, infoWindow } });
+      dispatch({ type: INIT_MAP_SUCCESS, payload: { google, map, infoWindow } });
     })
     .catch(e => {
+      console.error(e)
+      dispatch({ type: INIT_MAP_ERROR, payload: null });
       // do something
     });
 };

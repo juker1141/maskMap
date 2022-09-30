@@ -1,4 +1,5 @@
-export const INIT_MAP = 'INIT_MAP';
+export const INIT_MAP_SUCCESS = 'INIT_MAP_SUCCESS';
+export const INIT_MAP_ERROR = 'INIT_MAP_ERROR';
 export const FETCH_MASKDATA = 'FETCH_MASKDATA';
 export const POSITIONING_PLACE = 'POSITIONING_PLACE';
 export const UPDATE_AREA = 'UPDATE_AREA';

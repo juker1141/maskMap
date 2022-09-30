@@ -80,3 +80,6 @@ html {
   color: #b2b2b2;
   opacity: 1;
 }
+.bg-blackOpacity-50 {
+  background-color: #00000080;
+}
