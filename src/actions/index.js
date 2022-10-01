@@ -32,8 +32,7 @@ export const loadMap = ({googleMapsApiKey, center}) => async (dispatch) => {
       dispatch({ type: INIT_MAP_SUCCESS, payload: { google, map, infoWindow } });
     })
     .catch(e => {
-      console.error(e)
-      dispatch({ type: INIT_MAP_ERROR, payload: null });
+      dispatch({ type: INIT_MAP_ERROR });
       // do something
     });
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import ReactDOMServer from "react-dom/server";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import { connect } from "react-redux";
@@ -12,147 +12,12 @@ import StoresItem from "./StoresItem";
 let markerClusterer;
 let markers;
 
-// class Map extends React.Component {
-//   componentDidMount() {
-//     // if (props.googleApiKey) {
-//     //   props.loadMap({
-//     //     googleMapsApiKey: props.googleApiKey,
-//     //     center: props.center
-//     //   });
-//     //   props.fetchMaskData();
-//     // }
-//   }
-
-//   componentDidUpdate() {
-//     if (props.googleApiKey) {
-//       // props.loadMap({
-//       //   googleMapsApiKey: props.googleApiKey,
-//       //   center: props.center
-//       // });
-//       // props.fetchMaskData();
-//     }
-//     if (markers) {
-//       this.findClosestMarkers(markers);
-//     }
-//   }
-
-//   initMarkers() {
-//     if (markerClusterer) {
-//       markerClusterer.clearMarkers();
-//     }
-//     this.createMarkers();
-//   }
-
-//   markerFillColor(properties) {
-//     const totalMaskNum = properties.mask_adult + properties.mask_child;
-//     if (totalMaskNum >= 3000) {
-//       return "#22C55E";
-//     } else if (totalMaskNum <= 2999 && totalMaskNum >= 1000) {
-//       return "#F97316";
-//     } else if (totalMaskNum <= 999 && totalMaskNum > 0) {
-//       return "#DC2626";
-//     } else if (totalMaskNum === 0) {
-//       return "#A5A5A5";
-//     }
-//   }
-
-//   createMarkers() {
-//     if (props.google) {
-//       const google = props.google;
-//       const map = props.map;
-//       const infoWindow = props.infoWindow;
-//       markers = props.maskData.map(({ geometry, properties }) => {
-//         const coords = geometry.coordinates;
-//         const marker = new google.maps.Marker({
-//           position: { lat: coords[1], lng: coords[0] },
-//           icon: {
-//             path: faMapMarkerAlt.icon[4],
-//             fillColor: this.markerFillColor(properties),
-//             fillOpacity: 1,
-//             anchor: new google.maps.Point(
-//               faMapMarkerAlt.icon[0] / 2, // width
-//               faMapMarkerAlt.icon[1] // height
-//             ),
-//             strokeWeight: 1,
-//             strokeColor: "#ffffff",
-//             scale: 0.075,
-//           },
-//           properties,
-//         });
-
-//         marker.addListener(
-//           "click",
-//           (e) => {
-//             const content = ReactDOMServer.renderToString(
-//               <StoresItem store={marker} isInfoWindow={true} />
-//             );
-//             infoWindow.close();
-//             infoWindow.setContent(content);
-//             infoWindow.open(marker.getMap(), marker);
-//           },
-//           false
-//         );
-
-//         return marker;
-//       });
-
-//       markerClusterer = new MarkerClusterer({map, markers});
-//     }
-//   }
-
-//   findClosestMarkers(markers, n = 10) {
-//     let markersDistances = [];
-//     if (props.google) {
-//       const google = props.google;
-//       let latLng;
-//       if (!props.place) {
-//         latLng = new google.maps.LatLng(props.center.lat, props.center.lng);
-//       } else {
-//         latLng = props.place.geometry.location;
-//       }
-//       markers.map((marker) => {
-//         let d = google.maps.geometry.spherical.computeDistanceBetween(
-//           marker.position,
-//           latLng
-//         );
-//         return markersDistances.push({
-//           distance: d,
-//           marker: marker,
-//         });
-//       });
-//       let closestMarkers = markersDistances
-//         .sort((a, b) => {
-//           return a.distance - b.distance;
-//         })
-//         .slice(0, n);
-//       props.updateClosestStores(closestMarkers);
-//     }
-//   }
-
-//   render() {
-//     return (
-//       <div id="map" className="h-screen w-full lg:w-2/3 xl:w-3/4">
-//         {this.initMarkers()}
-//       </div>
-//     );
-//   }
-// }
 const Map = (props) => {
-  useEffect(() => {
-    if (props.googleApiKey) {
-      props.loadMap({
-        googleMapsApiKey: props.googleApiKey,
-        center: props.center
-      });
-      props.fetchMaskData();
-    }
-  }, [props.googleApiKey]);
-
   useEffect(() => {
     if (markers) {
       findClosestMarkers(markers);
     }
-  }, [markers])
+  }, [markers]);
 
   function initMarkers() {
     if (markerClusterer) {

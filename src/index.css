@@ -83,3 +83,6 @@ html {
 .bg-blackOpacity-50 {
   background-color: #00000080;
 }
+.z-10000 {
+  z-index: 10000;
+}
