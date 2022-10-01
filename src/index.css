@@ -86,3 +86,8 @@ html {
 .z-10000 {
   z-index: 10000;
 }
+#root #map .gm-style-iw .gm-ui-hover-effect > span {
+  margin: 0px !important;
+  width: 20px !important;
+  height: 20px !important;
+}
