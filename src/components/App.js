@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar';
 import Map from './Map';
 
+import Cookies from 'js-cookie';
+
 const App = () => {
   const googleMap = useSelector((store) => store.googleMap);
 
@@ -14,9 +16,13 @@ const App = () => {
 
   const [isCorrectGoogleApiKey, setIsCorrectGoogleApiKey] = useState(false);
   const [googleApiKey, setGoogleApiKey] = useState(null);
+
+  useEffect(() => {
+    const apiKey = Cookies.get("googleMapApiKey");
+    if (apiKey) setGoogleApiKey(apiKey);
+  }, []);
   
   useEffect(() => {
-    console.log(googleMap)
     if (googleMap) setIsCorrectGoogleApiKey(true);
   }, [googleMap]);
 
@@ -25,8 +31,8 @@ const App = () => {
       <Sidebar />
       <Map center={center} googleApiKey={googleApiKey} />
       {!isCorrectGoogleApiKey && (
-        <div className='absolute h-full w-full top-0 left-0 bg-blackOpacity-50 z-50 flex justify-center items-center'>
-          <div className='bg-white p-10 mt-24 w-full lg:w-1/3 flex flex-col items-start'>
+        <div className='fixed h-screen w-screen top-0 left-0 bg-blackOpacity-50 z-50 flex justify-center items-center'>
+          <div className='bg-white p-10 w-full lg:w-1/3 flex flex-col items-start'>
             <label htmlFor="googleApiKeyId" className="mb-3">請輸入您的 Google Map Api Key:</label>
             <input
               id="googleApiKeyId"
@@ -34,7 +40,8 @@ const App = () => {
               type="text"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  setGoogleApiKey(e.target.value)
+                  setGoogleApiKey(e.target.value);
+                  Cookies.set("googleMapApiKey", e.target.value, { expires: 7 });
                 }
               }}
             />
